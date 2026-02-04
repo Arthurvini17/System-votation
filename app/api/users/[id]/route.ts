@@ -39,8 +39,9 @@ export async function GET(
 // DELETE - deletar usuário por ID
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
+  const params = await context.params;
   const { id } = params;
 
   if (!id || isNaN(Number(id))) {
@@ -70,8 +71,9 @@ export async function DELETE(
 // PUT - atualizar usuário por ID
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
+  const params = await context.params;
   const { id } = params;
 
   if (!id || isNaN(Number(id))) {
