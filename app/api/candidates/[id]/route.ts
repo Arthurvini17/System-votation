@@ -1,31 +1,31 @@
-import { userController } from "@/controllers/userController";
+import { candidateController } from "@/controllers/candidateController";
 
-// GET - buscar usuário por ID
+// GET - buscar candidato por ID
 export async function GET(
   req: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const params = await context.params;
   const { id } = params;
-  return userController.getById(Number(id));
+  return candidateController.getById(Number(id));
 }
 
-// DELETE - deletar usuário por ID
+// DELETE - deletar candidato por ID
 export async function DELETE(
   req: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const params = await context.params;
   const { id } = params;
-  return userController.delete(Number(id));
+  return candidateController.delete(Number(id));
 }
 
-// PUT - atualizar usuário por ID
+// PUT - atualizar candidato por ID
 export async function PUT(
   req: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const params = await context.params;
   const { id } = params;
-  return userController.update(Number(id), req);
+  return candidateController.update(Number(id), req);
 }
