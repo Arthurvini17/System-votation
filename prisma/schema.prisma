@@ -19,7 +19,7 @@ model User {
 model Candidate {
   id   Int    @id @default(autoincrement())
   name String
-
+  description String
   votesReceived Vote[]
 }
 
