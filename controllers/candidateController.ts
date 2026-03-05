@@ -5,7 +5,7 @@ export const candidateController = {
 
 
   async getById(id: number) {
-    if(!id || isNaN(Number(id))) {
+    if (!id || isNaN(Number(id))) {
       return NextResponse.json(
         { error: "Id invalido ou não informado" },
         { status: 400 },
@@ -85,7 +85,7 @@ export const candidateController = {
 
 
   async update(id: number, req: Request) {
-    if(!id || isNaN(Number(id))) {
+    if (!id || isNaN(Number(id))) {
       return NextResponse.json(
         { error: "Id invalido ou não informado" },
         { status: 400 },

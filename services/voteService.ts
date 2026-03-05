@@ -1,19 +1,19 @@
-
-
 import prisma from "@/lib/prisma";
 
 export const voteService = {
+  async createVote(data: { userId: number, candidateId: number }) {
+    const { userId, candidateId } = data;
 
-  async createVote(userId: number, candidateId: number) {
-
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
+    // Verifica se já votou
+    const existingVote = await prisma.vote.findUnique({
+      where: { userId },
     });
 
-    if (!user) {
-      throw new Error("USER_NOT_FOUND");
+    if (existingVote) {
+      throw new Error("USER_ALREADY_VOTED");
     }
 
+    // Verifica se candidato existe
     const candidate = await prisma.candidate.findUnique({
       where: { id: candidateId },
     });
@@ -22,23 +22,12 @@ export const voteService = {
       throw new Error("CANDIDATE_NOT_FOUND");
     }
 
-    try {
-      const vote = await prisma.vote.create({
-        data: {
-          userId,
-          candidateId,
-        },
-      });
-
-      return vote;
-
-    } catch (error: any) {
-
-      if (error.code === "P2002") {
-        throw new Error("USER_ALREADY_VOTED");
-      }
-
-      throw error;
-    }
-  }
+    // Cria voto
+    return prisma.vote.create({
+      data: {
+        userId,
+        candidateId,
+      },
+    });
+  },
 };
