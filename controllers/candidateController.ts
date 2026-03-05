@@ -33,6 +33,7 @@ export const candidateController = {
     return NextResponse.json(candidates);
   },
 
+  //criação
   async create(req: Request) {
     if (!req.body) {
       return NextResponse.json(
@@ -57,7 +58,7 @@ export const candidateController = {
     }
   },
 
-
+  //delete candidate
   async delete(id: number) {
     if (!id || isNaN(Number(id))) {
       return NextResponse.json(
