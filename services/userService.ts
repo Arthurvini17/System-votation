@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import bcrypt from "bcrypt";
 
 export const userService = {
   async getAllUsers() {
@@ -12,8 +13,14 @@ export const userService = {
   },
 
   async createUser(data: { name: string; email: string; password: string }) {
+    const { name, email, password } = data;
+    const hashedPassword = await bcrypt.hash(password, 10);
     return await prisma.user.create({
-      data,
+      data: {
+        name,
+        email,
+        password: hashedPassword
+      }
     });
   },
 

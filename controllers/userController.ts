@@ -33,10 +33,46 @@ export const userController = {
   },
 
   async create(req: Request) {
-    const { email, password, name } = await req.json();
-    const user = await userService.createUser({ name, email, password });
-    return NextResponse.json(user);
+    if (!req.body) {
+      return NextResponse.json({ error: "Dados do usuario não informados" }, { status: 400 })
+    }
+    try {
+      const { name, email, password } = await req.json();
+      const user = await userService.createUser({ name, email, password });
+      return NextResponse.json(user);
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ error: "Erro ao criar usuario" }, { status: 500 });
+    }
   },
+
+
+  // async create(req: Request) {
+  //   const { name, email, password } = await req.json();
+  //   const user = await userService.createUser({ name, email, password });
+  //   if (!req.body) {
+  //     return NextResponse.json(
+  //       { error: "Dados do usuuario não informados" },
+  //       { status: 400 },
+  //     );
+  //   }
+  //   try {
+  //     const { name, email, password } = await req.json();
+  //     const candidate = await userService.createCandidate({
+  //       name,
+  //       votes,
+  //       description,
+  //     });
+  //     return NextResponse.json(candidate);
+  //   } catch (err) {
+  //     console.error(err);
+  //     return NextResponse.json(
+  //       { error: "Erro ao criar candidato" },
+  //       { status: 500 },
+  //     );
+  //   }
+  // },
+
 
   async delete(id: number) {
     if (!id || isNaN(Number(id))) {
